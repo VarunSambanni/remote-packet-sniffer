@@ -7,7 +7,7 @@ import pymongo
 
 MONGO_URI = 'mongodb+srv://adminUser:12345@remote-packet-sniffer.polt4sw.mongodb.net/?retryWrites=true&w=majority'
 INTERVAL = 5
-global dataCol, countsCol
+global packetDataCol, countsCol
 times = [0, 0]
 counts = [0, 0, 0, 0, 0] # [TCP, UDP, IP, IPv6, net_count]
 
@@ -53,7 +53,7 @@ def process_packet(packet):
     counts[4] += 1
     times[1] = time.time()
 
-    dataCol.insert_one({"layers" : layers, "timeStamp": datetime.now().strftime("%d/%m/%Y %H:%M:%S") , "packet" : packetInfo, "data": packetData}) 
+    packetDataCol.insert_one({"layers" : layers, "timeStamp": datetime.now().strftime("%d/%m/%Y %H:%M:%S") , "packet" : packetInfo, "data": packetData}) 
     countsCol.insert_one({"counts" : counts, "time": int(times[1]-times[0])})
     time.sleep(INTERVAL)
     ''' 
@@ -79,6 +79,6 @@ if __name__ == "__main__":
 
     myclient = pymongo.MongoClient(MONGO_URI)
     packetsDB = myclient["packets"]
-    dataCol = packetsDB['data']
+    packetDataCol = packetsDB['packets']
     countsCol = packetsDB['counts']
     sniffing('Wi-Fi', filter='*') # Interface : Wifi
