@@ -6,7 +6,7 @@ from datetime import datetime
 import pymongo
 
 MONGO_URI = 'mongodb+srv://adminUser:12345@remote-packet-sniffer.polt4sw.mongodb.net/?retryWrites=true&w=majority'
-INTERVAL = 5
+INTERVAL = 1
 global packetDataCol, countsCol
 times = [0, 0]
 counts = [0, 0, 0, 0, 0] # [TCP, UDP, IP, IPv6, net_count]
