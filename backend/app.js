@@ -5,8 +5,7 @@ const routes = require('./routes/routes')
 
 MONGODB_URI = 'mongodb+srv://adminUser:12345@remote-packet-sniffer.polt4sw.mongodb.net/packets?retryWrites=true&w=majority'
 
-const app = express()
-
+const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

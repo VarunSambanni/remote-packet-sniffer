@@ -1,6 +1,7 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
+import LinearProgress from '@mui/material/LinearProgress';
 
 function App() {
 
@@ -14,26 +15,29 @@ function App() {
     localStorage.setItem("startFlag", "N");
   }
 
+  if (localStorage.getItem("fetchInterval") == null) {
+    localStorage.setItem("fetchInterval", 1);
+  }
+
   const [countsDataAll, setCountsDataAll] = useState([]);
   const [countsDataTCP, setCountsDataTCP] = useState([]);
   const [countsDataUDP, setCountsDataUDP] = useState([]);
   const [countsDataIP, setCountsDataIP] = useState([]);
   const [countsDataIPv6, setCountsDataIPv6] = useState([]);
 
-  useEffect(() => {
+
+  useEffect(() => { // Runs every second, and refreshes the page if 'startFlag' -> Y
     const interval = setInterval(() => {
-      console.log('This will run every second!');
+      console.log("Here ", parseInt(localStorage.getItem("fetchInterval")));
       console.log("startFlag ", localStorage.getItem("startFlag"));
       if (localStorage.getItem("startFlag") == "Y") {
         setRefresh(refresh => !refresh);
       }
-      console.log('refresh ', refresh);
-    }, 1000);
+    }, 1000 * parseInt(localStorage.getItem("fetchInterval")));
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
-    console.log('refreshed');
     setIsLoading(true);
     let filteredData = [];
     fetch('http://localhost:5000/packets', {
@@ -77,16 +81,14 @@ function App() {
           console.log("Error fetching counts");
         }
         else {
-          console.log("Here ", data.data);
           let countsDataAllTemp = [], countsDataTCPTemp = [], countsDataUDPTemp = [], countsDataIPTemp = [], countsDataIPv6Temp = [];
           for (let i = 0; i < data.data.length; i++) {
-            countsDataAllTemp.push({ time: data.data[i].time, count: data.data[i].counts[4] });
-            countsDataTCPTemp.push({ time: data.data[i].time, count: data.data[i].counts[0] });
-            countsDataUDPTemp.push({ time: data.data[i].time, count: data.data[i].counts[1] });
-            countsDataIPTemp.push({ time: data.data[i].time, count: data.data[i].counts[2] });
-            countsDataIPv6Temp.push({ time: data.data[i].time, count: data.data[i].counts[3] });
+            countsDataAllTemp.push({ time: data.data[i].time, count: data.data[i].counts[4] - data.data[0].counts[4] });
+            countsDataTCPTemp.push({ time: data.data[i].time, count: data.data[i].counts[0] - data.data[0].counts[0] });
+            countsDataUDPTemp.push({ time: data.data[i].time, count: data.data[i].counts[1] - data.data[0].counts[1] });
+            countsDataIPTemp.push({ time: data.data[i].time, count: data.data[i].counts[2] - data.data[0].counts[2] });
+            countsDataIPv6Temp.push({ time: data.data[i].time, count: data.data[i].counts[3] - data.data[0].counts[3] });
           }
-          console.log("HERE....")
           console.log(countsDataAllTemp);
           setCountsDataAll(countsDataAllTemp);
           setCountsDataTCP(countsDataTCPTemp);
@@ -108,6 +110,11 @@ function App() {
     setPacketType(e.target.value);
   }
 
+  const fetchIntervalHandleChange = (e) => {
+    localStorage.setItem("fetchInterval", e.target.value);
+    window.location.replace('/');
+  }
+
   const clearHandler = () => {
     setIsLoading(true);
     fetch('http://localhost:5000/clear', {
@@ -119,14 +126,17 @@ function App() {
         if (data.success == false) {
           console.log("Error clearing DB");
         }
-        else {
-
-        }
       })
       .catch(err => {
         setIsLoading(false);
         console.log("Error clearing DB");
       });
+    setCountsDataAll([]);
+    setCountsDataTCP([]);
+    setCountsDataUDP([]);
+    setCountsDataIP([]);
+    setCountsDataIPv6([]);
+    window.location.replace('/');
     setRefresh(!refresh);
   }
 
@@ -151,7 +161,9 @@ function App() {
       </div>
 
       <div className='messageContainer'>
-        {isLoading ? <div>Loading...</div> : <div>&nbsp;</div>}
+        <div style={{ minHeight: '2em', color: 'white' }}>
+          {isLoading ? <LinearProgress sx={{ '& .MuiLinearProgress-bar': { backgroundColor: 'black' }, backgroundColor: 'white' }} /> : ''}
+        </div>
         {localStorage.getItem("startFlag") === "Y" ? <div>Fetching packet data... </div> : <div>Stopped</div>}
       </div>
 
@@ -198,14 +210,30 @@ function App() {
         </div>
       </div>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <select className='selectField' value={packetType} onChange={handleChange}>
-          <option value={"*"}>*</option>
-          <option value={"TCP"}>TCP</option>
-          <option value={"UDP"}>UDP</option>
-          <option value={"IP"}>IP</option>
-          <option value={"IPv6"}>IPv6</option>
-        </select>
+      <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+        <div >
+          <div style={{ display: 'flex' }}>
+            <div className='selectLabel'>Packet type : </div>
+            <select className='selectField' value={packetType} onChange={handleChange}>
+              <option value={"*"}>*</option>
+              <option value={"TCP"}>TCP</option>
+              <option value={"UDP"}>UDP</option>
+              <option value={"IP"}>IP</option>
+              <option value={"IPv6"}>IPv6</option>
+            </select>
+          </div>
+          <div style={{ display: 'flex' }}>
+            <div className='selectLabel'>Fetch Interval :</div>
+            <select className='selectField' value={(localStorage.getItem("fetchInterval"))} onChange={fetchIntervalHandleChange}>
+              <option value={0}>Live</option>
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={5}>5</option>
+              <option value={10}>10</option>
+            </select>
+          </div>
+        </div>
+        <div className='selectLabel' style={{ height: 'fit-content', padding: '0.4em' }}>Packets : {counts.length > 0 ? counts[counts.length - 1].counts[4] : 0}</div>
         <div className='counts'>
           <table>
             <tr>
@@ -234,7 +262,7 @@ function App() {
       <div className='dataContainer'>
         {data.map((packet, index) => {
           return <pre key={index} className='packetContainer'>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '1em 0em', margin: '0em 0em' }}>
               <div className='packetField'>
                 {packet.packet}
               </div>
