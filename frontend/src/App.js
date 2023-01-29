@@ -226,10 +226,10 @@ function App() {
             <div className='selectLabel'>Fetch Interval :</div>
             <select className='selectField' value={(localStorage.getItem("fetchInterval"))} onChange={fetchIntervalHandleChange}>
               <option value={0}>Live</option>
-              <option value={1}>1</option>
-              <option value={2}>2</option>
-              <option value={5}>5</option>
-              <option value={10}>10</option>
+              <option value={1}>1s</option>
+              <option value={2}>2s</option>
+              <option value={5}>5s</option>
+              <option value={10}>10s</option>
             </select>
           </div>
         </div>
@@ -260,6 +260,7 @@ function App() {
         </div>
       </div>
       <div className='dataContainer'>
+        {data.length === 0 && <div style={{ textAlign: 'center', padding: '1em' }}>No Packet Data</div>}
         {data.map((packet, index) => {
           return <pre key={index} className='packetContainer'>
             <div style={{ display: 'flex', justifyContent: 'space-between', padding: '1em 0em', margin: '0em 0em' }}>
