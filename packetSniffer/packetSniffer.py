@@ -6,7 +6,7 @@ from datetime import datetime
 import pymongo
 
 MONGO_URI = 'mongodb+srv://adminUser:12345@remote-packet-sniffer.polt4sw.mongodb.net/?retryWrites=true&w=majority'
-INTERVAL = 1
+INTERVAL = 0
 global packetDataCol, countsCol
 times = [0, 0]
 counts = [0, 0, 0, 0, 0] # [TCP, UDP, IP, IPv6, net_count]
@@ -24,9 +24,9 @@ def get_packet_layers(packet):
 
 def sniffing(interface, filter): # '*' --> No filter
     if filter == '*':
-        scapy.sniff(iface=interface, store=False, prn=process_packet) 
+        scapy.sniff(iface=interface, store=False, prn=process_packet, count=100) 
     else : 
-        scapy.sniff(iface=interface, store=False, prn=process_packet, filter=filter)
+        scapy.sniff(iface=interface, store=False, prn=process_packet, filter=filter, count=100)
 
 
 def process_packet(packet):
