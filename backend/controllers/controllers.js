@@ -46,6 +46,3 @@ exports.getClear = (req, res, next) => {
             return res.json({ success: false, msg: "Error clearing data" });
         })
 }
-
-
-

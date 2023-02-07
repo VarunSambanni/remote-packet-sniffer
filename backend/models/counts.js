@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const countsSchema = new Schema({
-    counts: [  // Array of layers 
+    counts: [  // Array of counts 
         {
             type: Number
         }

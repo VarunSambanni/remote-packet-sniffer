@@ -28,8 +28,6 @@ function App() {
 
   useEffect(() => { // Runs every second, and refreshes the page if 'startFlag' -> Y
     const interval = setInterval(() => {
-      console.log("Here ", parseInt(localStorage.getItem("fetchInterval")));
-      console.log("startFlag ", localStorage.getItem("startFlag"));
       if (localStorage.getItem("startFlag") == "Y") {
         setRefresh(refresh => !refresh);
       }
@@ -46,11 +44,9 @@ function App() {
       .then(res => res.json())
       .then(data => {
         if (data.success == false) {
-          console.log("Error fetching packets");
+          window.alert("Error fetching packets");
         }
         else {
-          console.log(data.data);
-
           if (packetType === '*') {
             data.data.reverse();
             setData(data.data);
@@ -68,7 +64,7 @@ function App() {
       })
       .catch(err => {
         setIsLoading(false);
-        console.log("Error fetching packets");
+        window.alert("Error fetching packets");
       });
 
     fetch('http://localhost:5000/counts', {
@@ -78,7 +74,7 @@ function App() {
       .then(data => {
         setIsLoading(false);
         if (data.success == false) {
-          console.log("Error fetching counts");
+          window.alert("Error fetching counts");
         }
         else {
           let countsDataAllTemp = [], countsDataTCPTemp = [], countsDataUDPTemp = [], countsDataIPTemp = [], countsDataIPv6Temp = [];
@@ -89,7 +85,6 @@ function App() {
             countsDataIPTemp.push({ time: data.data[i].time, count: data.data[i].counts[2] - data.data[0].counts[2] });
             countsDataIPv6Temp.push({ time: data.data[i].time, count: data.data[i].counts[3] - data.data[0].counts[3] });
           }
-          console.log(countsDataAllTemp);
           setCountsDataAll(countsDataAllTemp);
           setCountsDataTCP(countsDataTCPTemp);
           setCountsDataUDP(countsDataUDPTemp);
@@ -100,7 +95,7 @@ function App() {
       })
       .catch(err => {
         setIsLoading(false);
-        console.log("Error fetching packets");
+        window.alert("Error fetching packets");
       });
 
 
@@ -124,12 +119,12 @@ function App() {
       .then(data => {
         setIsLoading(false);
         if (data.success == false) {
-          console.log("Error clearing DB");
+          window.alert("Error clearing database");
         }
       })
       .catch(err => {
         setIsLoading(false);
-        console.log("Error clearing DB");
+        window.alert("Error clearing database");
       });
     setCountsDataAll([]);
     setCountsDataTCP([]);
