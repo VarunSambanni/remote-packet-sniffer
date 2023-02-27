@@ -21,7 +21,7 @@ A web application for sniffing packets of a remote network, with the help of a p
   npm install
   npm run dev
   ```
-- Navigate to frontend, install dependencies, start the react app and view the sniffed packets
+- Navigate to frontend, install dependencies, start the react app and view the sniffed packets on your device
 
   ```console 
   npm install
