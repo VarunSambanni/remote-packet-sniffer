@@ -8,5 +8,22 @@ A web application for sniffing packets of a remote network, with the help of a p
 ## Packet 
 ![image](https://user-images.githubusercontent.com/87132174/221401639-a578751e-5b1c-46d1-92b2-ccfa446041f6.png)
 
+## Getting Started 
 
+- Run the python file on the remote device
 
+  ```console 
+  python packetSniffer.py
+  ```
+- Navigate to backend, install dependencies, and start the server
+
+  ```console 
+  npm install
+  npm run dev
+  ```
+- Navigate to frontend, install dependencies, start the react app and view the sniffed packets
+
+  ```console 
+  npm install
+  npm run start
+  ```
