@@ -10,7 +10,9 @@ A web application for sniffing packets of a remote network, with the help of a p
 
 ## Getting Started 
 
-- Run the python file on the remote device
+- Insert the MongoDB URI in packetSniffer/packetSniffer.py and backend/app.js 
+
+- Run the python file located in packetSniffer, on the remote device
 
   ```console 
   python packetSniffer.py
