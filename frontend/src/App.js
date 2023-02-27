@@ -64,7 +64,7 @@ function App() {
       })
       .catch(err => {
         setIsLoading(false);
-        window.alert("Error fetching packets");
+        //window.alert("Error fetching packets");
       });
 
     fetch('http://localhost:5000/counts', {
@@ -95,7 +95,7 @@ function App() {
       })
       .catch(err => {
         setIsLoading(false);
-        window.alert("Error fetching packets");
+        //window.alert("Error fetching packets");
       });
 
 

@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 
 const routes = require('./routes/routes')
 
-MONGODB_URI = 'mongodb+srv://adminUser:12345@remote-packet-sniffer.polt4sw.mongodb.net/packets?retryWrites=true&w=majority'
+MONGODB_URI = 'INSERT MONGODB URI'
 
 const app = express(); // Express app intialized, on this app we will perform things 
 

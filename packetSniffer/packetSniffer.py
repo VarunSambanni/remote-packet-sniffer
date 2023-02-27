@@ -5,7 +5,7 @@ import time
 from datetime import datetime
 import pymongo
 
-MONGO_URI = 'mongodb+srv://adminUser:12345@remote-packet-sniffer.polt4sw.mongodb.net/?retryWrites=true&w=majority'
+MONGO_URI = 'INSERT MONGODB URI'
 INTERVAL = 0 # Gap between packets being added to the database
 global packetDataCol, countsCol
 times = [0, 0] # global variable, 0-> Start time, 1-> End time  
