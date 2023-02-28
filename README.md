@@ -12,11 +12,15 @@ A web application for sniffing packets of a remote network, with the help of a p
 
 - Insert the MongoDB URI in packetSniffer/packetSniffer.py and backend/app.js 
 
-- Run the python file located in packetSniffer, on the remote device
+- Run the python file located in packetSniffer, on the remote device after installing the requried packages
 
   ```console 
+  pip install pymongo
+  pip install scapy
   python packetSniffer.py
   ```
+- Install NpCap if on Windows
+
 - Navigate to backend, install dependencies, and start the server
 
   ```console 
