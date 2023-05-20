@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useEffect, useState } from 'react';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Label, Legend, Tooltip } from 'recharts';
 import LinearProgress from '@mui/material/LinearProgress';
 
 function App() {
@@ -79,11 +79,11 @@ function App() {
         else {
           let countsDataAllTemp = [], countsDataTCPTemp = [], countsDataUDPTemp = [], countsDataIPTemp = [], countsDataIPv6Temp = [];
           for (let i = 0; i < data.data.length; i++) {
-            countsDataAllTemp.push({ time: data.data[i].time, count: data.data[i].counts[4] - data.data[0].counts[4] });
-            countsDataTCPTemp.push({ time: data.data[i].time, count: data.data[i].counts[0] - data.data[0].counts[0] });
-            countsDataUDPTemp.push({ time: data.data[i].time, count: data.data[i].counts[1] - data.data[0].counts[1] });
-            countsDataIPTemp.push({ time: data.data[i].time, count: data.data[i].counts[2] - data.data[0].counts[2] });
-            countsDataIPv6Temp.push({ time: data.data[i].time, count: data.data[i].counts[3] - data.data[0].counts[3] });
+            countsDataAllTemp.push({ time: data.data[i].time, countAll: data.data[i].counts[4] - data.data[0].counts[4] });
+            countsDataTCPTemp.push({ time: data.data[i].time, countTCP: data.data[i].counts[0] - data.data[0].counts[0] });
+            countsDataUDPTemp.push({ time: data.data[i].time, countUDP: data.data[i].counts[1] - data.data[0].counts[1] });
+            countsDataIPTemp.push({ time: data.data[i].time, countIP: data.data[i].counts[2] - data.data[0].counts[2] });
+            countsDataIPv6Temp.push({ time: data.data[i].time, countIPv6: data.data[i].counts[3] - data.data[0].counts[3] });
           }
           setCountsDataAll(countsDataAllTemp);
           setCountsDataTCP(countsDataTCPTemp);
@@ -165,42 +165,125 @@ function App() {
       <div className='graphsContainer'>
         <div className='graph'>
           <div className='graphLabel'>Packets vs Time</div>
-          <LineChart width={280} height={280} data={countsDataAll}>
-            <Line type="monotone" dataKey="count" stroke="#8884d8" dots={true} />
-            <XAxis stroke='white' dataKey="time" />
-            <YAxis stroke='white' />
+          <LineChart width={280} height={280} >
+            <XAxis stroke='black' dataKey="time" type="number" style={{ fontFamily: 'sans-serif', fontSize: '100%' }} >
+              <Label
+                style={{ textAnchor: 'middle', transform: 'translateY(10px)', fill: 'black' }}
+                angle={0}
+                value={"Time"} />
+            </XAxis>
+            <YAxis stroke='black' >
+              <Label
+                style={{
+                  textAnchor: "middle",
+                  fontSize: "90%",
+                  fill: "black",
+                }}
+                angle={270}
+                value={"Count"} />
+            </YAxis>
+            <Legend />
+            <Line type="monotone" data={countsDataAll} dataKey="countAll" stroke="black" />
+            <Line type="monotone" data={countsDataTCP} dataKey="countTCP" stroke="purple" />
+            <Line type="monotone" data={countsDataUDP} dataKey="countUDP" stroke="green" />
+            <Line type="monotone" data={countsDataIP} dataKey="countIP" stroke="blue" />
+            <Line type="monotone" data={countsDataIPv6} dataKey="countIPv6" stroke="orange" />
           </LineChart>
+          <div className='axisLabel'></div>
         </div>
         <div className='graph'>
           <div className='graphLabel'>TCP Packets vs Time</div>
           <LineChart width={280} height={280} data={countsDataTCP}>
-            <Line type="monotone" dataKey="count" stroke="#8884d8" dots={true} />
-            <XAxis stroke='white' dataKey="time" />
-            <YAxis stroke='white' />
+            <Line type="monotone" dataKey="countTCP" stroke="#000000" dots={true} />
+            <XAxis stroke='black' dataKey="time" type="number" >
+              <Label
+                offset={500}
+                style={{ textAnchor: 'middle', transform: 'translateY(10px)', fill: 'black' }}
+                angle={0}
+                value={"Time"} />
+            </XAxis>
+            <YAxis stroke='black' >
+              <Label
+                style={{
+                  textAnchor: "middle",
+                  fontSize: "90%",
+                  fill: "black",
+                }}
+                angle={270}
+                value={"Count"} />
+            </YAxis>
           </LineChart>
         </div>
         <div className='graph'>
           <div className='graphLabel'>UDP Packets vs Time</div>
           <LineChart width={280} height={280} data={countsDataUDP}>
-            <Line type="monotone" dataKey="count" stroke="#8884d8" dots={true} />
-            <XAxis stroke='white' dataKey="time" />
-            <YAxis stroke='white' />
+            <Line type="monotone" dataKey="countUDP" stroke="#000000" dots={true} />
+            <XAxis stroke='black' dataKey="time" type="number" >
+              <Label
+                offset={500}
+                className='axisLabel'
+                style={{ textAnchor: 'middle', transform: 'translateY(10px)', fill: 'black' }}
+                angle={0}
+                value={"Time"} />
+            </XAxis>
+            <YAxis stroke='black' >
+              <Label
+                style={{
+                  textAnchor: "middle",
+                  fontSize: "90%",
+                  fill: "black",
+                }}
+                angle={270}
+                value={"Count"} />
+            </YAxis>
           </LineChart>
         </div>
         <div className='graph'>
           <div className='graphLabel'>IP Packets vs Time</div>
           <LineChart width={280} height={280} data={countsDataIP}>
-            <Line type="monotone" dataKey="count" stroke="#8884d8" dots={true} />
-            <XAxis stroke='white' dataKey="time" />
-            <YAxis stroke='white' />
+            <Line type="monotone" dataKey="countIP" stroke="#000000" dots={true} />
+            <XAxis stroke='black' dataKey="time" type="number" >
+              <Label
+                offset={500}
+                className='axisLabel'
+                style={{ textAnchor: 'middle', transform: 'translateY(10px)', fill: 'black' }}
+                angle={0}
+                value={"Time"} />
+            </XAxis>
+            <YAxis stroke='black' >
+              <Label
+                style={{
+                  textAnchor: "middle",
+                  fontSize: "90%",
+                  fill: "black",
+                }}
+                angle={270}
+                value={"Count"} />
+            </YAxis>
           </LineChart>
         </div>
         <div className='graph'>
           <div className='graphLabel'>IPv6 Packets vs Time</div>
           <LineChart title="graph" width={280} height={280} data={countsDataIPv6}>
-            <Line type="monotone" dataKey="count" stroke="#8884d8" dots={true} />
-            <XAxis stroke='white' dataKey="time" />
-            <YAxis stroke='white' />
+            <Line type="monotone" dataKey="countIPv6" stroke="#000000" dots={true} />
+            <XAxis stroke='black' dataKey="time" type="number" >
+              <Label
+                offset={500}
+                className='axisLabel'
+                style={{ textAnchor: 'middle', transform: 'translateY(10px)', fill: 'black' }}
+                angle={0}
+                value={"Time"} />
+            </XAxis>
+            <YAxis stroke='black' >
+              <Label
+                style={{
+                  textAnchor: "middle",
+                  fontSize: "90%",
+                  fill: "black",
+                }}
+                angle={270}
+                value={"Count"} />
+            </YAxis>
           </LineChart>
         </div>
       </div>

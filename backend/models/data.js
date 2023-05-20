@@ -20,3 +20,4 @@ const dataSchema = new Schema({
 })
 
 module.exports = mongoose.model('packet', dataSchema);
+

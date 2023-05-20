@@ -5,8 +5,8 @@ body {
 
 .dataContainer {
   border: 1px solid rgb(255, 255, 255);
-  background-color: rgb(43, 43, 43);
-  color: white;
+  background-color: white;
+  color: black;
   max-height: 50em;
   min-height: 50em;
   margin: 1em 0em;
@@ -32,8 +32,9 @@ body {
 }
 
 .packetContainer {
-  border: 2px solid white;
-  background-color: rgb(0, 0, 0);
+  border: 2px solid black;
+  background-color: white;
+  color:black;  
   margin: 1em;
   transition: all 0.4s;
   padding: 0.4em;
@@ -47,8 +48,8 @@ body {
   border: 1px solid white;
   text-align: center;
   margin: 1em 0em;
-  background-color: black;
-  color: white;
+  background-color: white;
+  color: black;
 }
 
 .dataField {
@@ -76,9 +77,9 @@ body {
 
 .selectField {
   margin: 1em 0.4em 1em 0em;
-  background-color: black;
+  background-color: white;
   height: 2em;
-  color: white;
+  color: black;
 }
 
 .selectLabel {
@@ -100,9 +101,9 @@ table,
 td,
 tr,
 th {
-  border: 1px solid white;
-  background-color: black;
-  color: white;
+  border: 1px solid black;
+  background-color: white;
+  color: black;
 }
 
 select {
@@ -119,7 +120,8 @@ table {
   width: fit-content;
   display: flex;
   justify-content: space-between;
-  background-color: rgb(0, 0, 0);
+  background-color: white;
+  color:black;
   font-size: 0.8rem;
   overflow-x: auto;
   width: 100%;
@@ -128,17 +130,25 @@ table {
 }
 
 .graph {
-  border: 2px solid black;
+  border: 2px solid white;
   margin: 0.45em;
-  color: white;
+  color: black;
   transition: all 0.4s;
 }
 
 .graph:hover {
-  border: 2px solid white;
+  border: 2px solid black;
 }
 
 .graphLabel {
   text-align: center;
   width: 100%;
+}
+
+.axisLabel{
+  background-color: aqua;
+  min-height: 2em;
+  top:2em;
+  position: absolute;
+  z-index: 4;
 }

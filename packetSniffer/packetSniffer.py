@@ -1,11 +1,11 @@
-import scapy.all as scapy  # NpCap installed on Windows to support Scapy
+import scapy.all as scapy  
 from scapy.layers import http
 from scapy.layers.inet import IP, ICMP
 import time
 from datetime import datetime
 import pymongo
 
-MONGO_URI = 'INSERT MONGODB URI'
+MONGO_URI = 'mongodb+srv://adminUser:12345@remote-packet-sniffer.polt4sw.mongodb.net/packets?retryWrites=true&w=majority'
 INTERVAL = 0 # Gap between packets being added to the database
 global packetDataCol, countsCol
 times = [0, 0] # global variable, 0-> Start time, 1-> End time  

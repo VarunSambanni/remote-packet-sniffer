@@ -2,14 +2,13 @@ const express = require('express')
 const cors = require('cors')
 const mongoose = require('mongoose')
 
-
 const routes = require('./routes/routes')
 
-MONGODB_URI = 'INSERT MONGODB URI'
+MONGODB_URI = 'mongodb+srv://adminUser:12345@remote-packet-sniffer.polt4sw.mongodb.net/packets?retryWrites=true&w=majority'
 
-const app = express(); // Express app intialized, on this app we will perform things 
+const app = express();
 
-app.use(express.urlencoded({ extended: true })); // app.use('middleware function')
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 app.use(routes);

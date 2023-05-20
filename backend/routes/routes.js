@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const controllers = require('../controllers/controllers');
 
-router.get('/', controllers.getHome);
+router.get('/', controllers.getHome); // Testing
 
 router.get('/packets', controllers.getPackets);
 
